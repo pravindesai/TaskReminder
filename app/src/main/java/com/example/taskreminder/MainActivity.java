@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == ADDREQUESTCODE && data!=null) {
 
-            Toast.makeText(MainActivity.this, "ON result ", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, "ON result ", Toast.LENGTH_SHORT).show();
             Task newTask = (Task)data.getExtras().getSerializable("newTask");
             Log.d("DATA: ",newTask.TaskName);
             taskArrayList.add(newTask);
@@ -120,13 +120,12 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode==REQUEST_DELETE){
 
                 Task deleteTask = (Task)data.getExtras().getSerializable("deleteTask");
-                int index=1;
+                int index=0;
                 for(Task t : taskArrayList){
                     if (t.getId() == deleteTask.getId())
-                    {
-                        index++;
                         break;
-                    }
+                    else
+                        index++;
                 }
                 taskArrayList.remove(index);
                 Log.d("index ", index+"");

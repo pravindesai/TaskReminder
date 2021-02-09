@@ -134,7 +134,7 @@ public class DisplayAndEditActivity extends AppCompatActivity {
             int imgId = data.getIntExtra("imgid",0);
             task.setImageId(imgId);
             imageView.setImageResource(imgId);
-            Toast.makeText(DisplayAndEditActivity.this,imgId+"",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DisplayAndEditActivity.this,imgId+"",Toast.LENGTH_SHORT).show();
         }
     }
 }
