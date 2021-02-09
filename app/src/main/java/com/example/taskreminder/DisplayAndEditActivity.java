@@ -17,9 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.Serializable;
-
 import static com.example.taskreminder.MainActivity.ADDREQUESTCODE;
 import static com.example.taskreminder.MainActivity.REQUEST_DELETE;
 
@@ -103,11 +101,16 @@ public class DisplayAndEditActivity extends AppCompatActivity {
     class updateTaskClickListner implements View.OnClickListener{
         @Override
         public void onClick(View view) {
-            Toast.makeText(DisplayAndEditActivity.this,"Btn Clicked",Toast.LENGTH_SHORT).show();
+
             Intent output = new Intent();
+            task.setTaskName(titleEt.getText().toString());
+            task.setTaskDescription(descEt.getText().toString());
+
             output.putExtra("updatedtask",(Serializable)task);
             setResult(RESULT_OK,output);
             finish();
+
+
         }
     }
 
@@ -115,10 +118,10 @@ public class DisplayAndEditActivity extends AppCompatActivity {
 
         @Override
         public void onClick(DialogInterface dialogInterface, int i) {
-            Toast.makeText(DisplayAndEditActivity.this,"BUTTON CLICKED",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DisplayAndEditActivity.this,"DELETE BUTTON CLICKED"+task.getTaskName(),Toast.LENGTH_SHORT).show();
 
             Intent output = new Intent();
-            output.putExtra("id", task.getId());
+            output.putExtra("deleteTask", (Serializable)task);
             setResult(REQUEST_DELETE,output);
             finish();
         }
@@ -133,6 +136,5 @@ public class DisplayAndEditActivity extends AppCompatActivity {
             imageView.setImageResource(imgId);
             Toast.makeText(DisplayAndEditActivity.this,imgId+"",Toast.LENGTH_SHORT).show();
         }
-
     }
 }

@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView taskRecyclerView;
     TaskAdapter taskAdapter;
     ArrayList<Task> taskArrayList;
+    private int SelectedTask;
     static int UPDATEREQUESTCODE = 1,ADDREQUESTCODE=2,REQUEST_DELETE=3;
 
     @Override
@@ -51,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         taskRecyclerView = findViewById(R.id.taskRecyclerView);
         taskArrayList = new ArrayList<>();
+        taskArrayList.add(new Task(1,R.drawable.ic_launcher_background,"title1","desc"));
+        taskArrayList.add(new Task(2,R.drawable.ic_launcher_background,"title2","desc2"));
+        taskArrayList.add(new Task(3,R.drawable.ic_launcher_background,"title3","desc3"));
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         taskRecyclerView.setLayoutManager(linearLayoutManager);
@@ -90,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
             Intent UpdateTaskintent = new Intent(MainActivity.this, DisplayAndEditActivity.class);
             Task updateTask = taskArrayList.get(position);
+            SelectedTask = updateTask.getId();
             UpdateTaskintent.putExtra("task",(Serializable) updateTask);
 
             startActivityForResult(UpdateTaskintent,UPDATEREQUESTCODE);
@@ -111,22 +117,36 @@ public class MainActivity extends AppCompatActivity {
 
         }else if(requestCode == UPDATEREQUESTCODE && data!=null) {
 
-//            if(resultCode == REQUEST_DELETE){
-//                int deletId = (int) data.getExtras().getInt("id");
-//                taskArrayList.remove(deletId-1);
-//                taskAdapter.notifyDataSetChanged();
-//                //Toast.makeText(MainActivity.this,"DELETE "+deletId,Toast.LENGTH_SHORT).show();
-//            }else
-                {
+            if(resultCode==REQUEST_DELETE){
 
-                Task updatedTask =(Task)data.getExtras().getSerializable("updatedtask");
-                Log.d("task: ",updatedTask.getId()+" "+updatedTask.getTaskName());
-                taskArrayList.set(updatedTask.getId()-1,updatedTask);
+                Task deleteTask = (Task)data.getExtras().getSerializable("deleteTask");
+                int index=1;
+                for(Task t : taskArrayList){
+                    if (t.getId() == deleteTask.getId())
+                    {
+                        index++;
+                        break;
+                    }
+                }
+                taskArrayList.remove(index);
+                Log.d("index ", index+"");
+                taskAdapter.notifyDataSetChanged();
+
+                Toast.makeText(MainActivity.this,"DELETE "+deleteTask.getTaskName(),Toast.LENGTH_SHORT).show();
+
+            }else if(resultCode == RESULT_OK) {
+
+                //Toast.makeText(MainActivity.this,"UPDATE "+resultCode,Toast.LENGTH_SHORT).show();
+                Task updatedTask = (Task) data.getExtras().getSerializable("updatedtask");
+                Log.d("task: ", updatedTask.getId() + " " + updatedTask.getTaskName());
+                taskArrayList.set(updatedTask.getId() - 1, updatedTask);
+
                 taskAdapter.notifyDataSetChanged();
 
             }
-
         }
+
+
 
 
     }

@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import java.io.Serializable;
+import java.util.Random;
+
 import static com.example.taskreminder.MainActivity.ADDREQUESTCODE;
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -49,7 +51,7 @@ public class AddTaskActivity extends AppCompatActivity {
             Desc     = updateDescriptionEt.getText().toString();
 
             Intent output = new Intent();
-            Task newTask = new Task(0,imgId,Title,Desc);
+            Task newTask = new Task(new Random().nextInt(),imgId,Title,Desc);
             output.putExtra("newTask",(Serializable)newTask);
             setResult(RESULT_OK,output);
             finish();
