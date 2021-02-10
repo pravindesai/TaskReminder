@@ -39,6 +39,7 @@ public class AddTaskActivity extends AppCompatActivity {
         updateDescriptionEt = findViewById(R.id.updateDescriptionEt);
         updateBtn = findViewById(R.id.updateBtn);
         imgId    = R.drawable.ic_launcher_background;
+        updateBtn.setText("ADD TASK");
 
         imageView.setOnClickListener(new selectImageListner());
         updateBtn.setOnClickListener(new updateBtnClickListner());
